@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>indx.DeleteME Timer</title>
+    <title>indx_DeleteME Timer</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
 * {
@@ -43,6 +43,7 @@ body {
     font-size: 3em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* colorขอบ */
     text-align: center; /* จัดให้อยู่กึ่งกลาง */
+    
 
 }
 
@@ -70,21 +71,28 @@ hr {
     aspect-ratio: 1/1; /* ทำให้เป็นสี่เหลี่ยมจัตุรัส */
 }
 
-.timer {
+/*.timer {
     font-size: 3em;
     display: flex;
     align-items: center;
-    justify-content: right;
+    justify-content: center;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%; /* ทำให้ตัวเลขกึ่งกลาง */
+    width: 100%; /* ทำให้ตัวเลขกึ่งกลาง 
     height: 100%;
+}*/
+
+
+.timer {
+    font-size: 3em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
 }
-
-
-
 
 
 
@@ -203,6 +211,11 @@ button:hover {
 
 
 
+.fixed-candle {
+            height: 100px;
+            align-content: end;
+        }
+
 .candle {
             position: relative;
             width: 40px;
@@ -268,8 +281,8 @@ button:hover {
             position: absolute;
             bottom: 100%;
             left: 50%;
-            width: 10px;
-            height: 10px;
+            width: 20px;
+            height: 20px;
             background-color: gray;
             border-radius: 50%;
             opacity: 0;
@@ -277,8 +290,8 @@ button:hover {
 }
         
  @keyframes rise {
-            0% { transform: translate(-50%, 0) scale(1); opacity: 1; }
-            100% { transform: translate(-50%, -100px) scale(0.5); opacity: 0; }
+        0% { transform: translate(-50%, 0) scale(1); opacity: 1; }
+        100% { transform: translate(-50%, -100px) scale(0.5); opacity: 0; }
 }
 
 
@@ -304,24 +317,27 @@ button:hover {
     </audio>
     
 
-
+   
     <div class="container">
         <h1 class="title">Melt ME! The Candle!</h1>
         <h2 class="describe1">Read 25:00 | Rest 5:00</h2>
         <hr>
 
-            <p class="timer" id="timer">25:00</p>
+        <div class="fixed-candle">
             <div class="candle" id="candle">
                 <div class="flame" id="flame"></div>
             </div>
-    </div>
-
+        </div>
+        
+        <p class="timer" id="timer">25:00</p>
         <div class="button-wrapper">
             <button id="start">Start</button>
             <button id="stop">Stop</button>
             <button id="reset">Reset</button>
         </div>
+        
     </div>
+
 
 
 

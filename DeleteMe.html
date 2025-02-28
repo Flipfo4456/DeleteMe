@@ -310,10 +310,11 @@ button:hover {
         <h2 class="describe1">Read 25:00 | Rest 5:00</h2>
         <hr>
 
-        <p class="timer" id="timer">25:00</p>
-        <div class="candle" id="candle">
-            <div class="flame" id="flame"></div>
-        </div>
+            <p class="timer" id="timer">25:00</p>
+            <div class="candle" id="candle">
+                <div class="flame" id="flame"></div>
+            </div>
+    </div>
 
         <div class="button-wrapper">
             <button id="start">Start</button>
@@ -321,7 +322,6 @@ button:hover {
             <button id="reset">Reset</button>
         </div>
     </div>
-
 
 
 
@@ -387,156 +387,156 @@ button:hover {
         };
 
 
-    const startTimer = () =>{
-        start.disabled = true; // Disable start button to prevent spamming
+        const startTimer = () =>{
+            start.disabled = true; // Disable start button to prevent spamming
 
-        bufferNowTime = setInterval(() => {
+            bufferNowTime = setInterval(() => {
 
-            if (timeLeft > 0) {
-                timeLeft--;
-                document.getElementById("candle").style.height = (100 * (timeLeft / totalTime)) + "px";
-                updateTimer();
-            } else {
-                clearInterval(bufferNowTime);
-                clearInterval(fireInterval); // Stop fire particles
-                clearInterval(smokeInterval); // Stop smoke particles when the flame is out
-                document.getElementById("flame").style.display = "none";
-                createSmoke(); 
-                timeLeft=0;
-                updateTimer();
-            }
-            
-            
-        }, 1000);//-1000ms = 1secs
-    smokeInterval = setInterval(createSmokeParticles, 1500); // Generate smoke while flame is burning
-    fireInterval = setInterval(createFireParticles, 500); // Generate fire particles
-};
-                    
-            
-            
-const stopTimer = () => {
-    clearInterval(bufferNowTime);
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    document.getElementById("candle").style.height = (100 * (timeLeft / totalTime)) + "px";
+                    updateTimer();
+                }else{
+                    clearInterval(bufferNowTime);
+                    clearInterval(fireInterval); // Stop fire particles
+                    clearInterval(smokeInterval); // Stop smoke particles when the flame is out
+                    document.getElementById("flame").style.display = "none";
+                    createSmoke(); 
+                    timeLeft=0;
+                    updateTimer();
+                }
                 
-    /*            
-    if (timeLeft > 1500) {
-        timeLeft = 300; // Set count down 
-        updateTimer();
-                    
-         // immediately
-        let countdownInterval = setInterval(() => {
-            timeLeft--; 
-            updateTimer();
-                        
-            if (timeLeft <= 0) {
-                timeLeft = 0; // Set count down 
-                alert("Time's up!");
-                totalTime = 1500; 
-                clearInterval(countdownInterval); // Stop the countdown when time reaches 0
-                start.disabled = false; // can press start
-            }
-        }, 1000); // Countdown every 1 sec
-    } else {*/
-    //  Time under or  =  expected val
-    updateTimer();
-    start.disabled = false; // can press start
-    // }
-        
-        
-            start.disabled = false; // can press start
+                
+            }, 1000);//-1000ms = 1secs
+            smokeInterval = setInterval(createSmokeParticles, 1500); // Generate smoke while flame is burning
+            fireInterval = setInterval(createFireParticles, 500); // Generate fire particles
         };
+                        
+                
+                
+            const stopTimer = () => {
+                clearInterval(bufferNowTime);
+                            
+                /*            
+                if (timeLeft > 1500) {
+                    timeLeft = 300; // Set count down 
+                    updateTimer();
+                                
+                    // immediately
+                    let countdownInterval = setInterval(() => {
+                        timeLeft--; 
+                        updateTimer();
+                                    
+                        if (timeLeft <= 0) {
+                            timeLeft = 0; // Set count down 
+                            alert("Time's up!");
+                            totalTime = 1500; 
+                            clearInterval(countdownInterval); // Stop the countdown when time reaches 0
+                            start.disabled = false; // can press start
+                        }
+                    }, 1000); // Countdown every 1 sec
+                } else {*/
+                //  Time under or  =  expected val
+                updateTimer();
+                start.disabled = false; // can press start
+                // }
+                    
+                    
+                start.disabled = false; // can press start
+            };
 
 
 
 
-        const resetTimer = () => {
-    clearInterval(bufferNowTime);
-    clearInterval(fireInterval);
-    clearInterval(smokeInterval);
+            const resetTimer = () => {
+                clearInterval(bufferNowTime);
+                clearInterval(fireInterval);
+                clearInterval(smokeInterval);
 
-    timeLeft = totalTime; // รีเซ็ตเวลา
-    updateTimer();
-    
-    document.getElementById("candle").style.height = "100px"; // รีเซ็ตความสูงเทียน
-    document.getElementById("flame").style.display = "block"; // แสดงเปลวไฟใหม่
+                timeLeft = totalTime; // รีเซ็ตเวลา
+                updateTimer();
+                
+                document.getElementById("candle").style.height = "100px"; // รีเซ็ตความสูงเทียน
+                document.getElementById("flame").style.display = "block"; // แสดงเปลวไฟใหม่
 
-    start.disabled = false;
-};
-
-
+                start.disabled = false;
+            };
 
 
-        document.addEventListener("visibilitychange", () => {
-            if (document.hidden) {
-                stopTimer();
+
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.hidden) {
+                    stopTimer();
+                }
+            });
+
+
+            function createFireParticles() {
+                if (timeLeft <= 0) return; // Stop fire particles when time is up
+
+                for (let i = 0; i < 3; i++) {  
+                    setTimeout(() => {
+                        const fire = document.createElement("div");
+                        fire.classList.add("fire-particle");
+
+                        // More random positioning
+                        let randomX = Math.random() * 20 - 10; // Random left movement (-10 to 10)
+                        let randomY = Math.random() * 10 - 5;  // Random upward movement (-5 to 5)
+                        
+                        fire.style.left = `calc(50% + ${randomX}px)`;
+                        fire.style.top = `calc(-50px + ${randomY}px)`;
+                        fire.style.animationDuration = (0.5 + Math.random() * 0.5) + "s"; 
+                        
+                        document.getElementById("candle").appendChild(fire);
+                        setTimeout(() => fire.remove(), 1000); // Remove fire after animation
+                    }, i * 100);
+                }
             }
-        });
 
+            function createSmokeParticles() {
+                if (timeLeft <= 0) return; // Stop smoke particles when time is up
 
-function createFireParticles() {
-    if (timeLeft <= 0) return; // Stop fire particles when time is up
+                for (let i = 0; i < 3; i++) {  
+                    setTimeout(() => {
+                        const smoke = document.createElement("div");
+                        smoke.classList.add("smoke-particle");
 
-    for (let i = 0; i < 3; i++) {  
-        setTimeout(() => {
-            const fire = document.createElement("div");
-            fire.classList.add("fire-particle");
+                        // More random positioning
+                        let randomX = Math.random() * 20 - 10; // Random left movement (-10 to 10)
+                        let randomY = Math.random() * 15 - 7;  // Random slight vertical variation (-7 to 7)
 
-            // More random positioning
-            let randomX = Math.random() * 20 - 10; // Random left movement (-10 to 10)
-            let randomY = Math.random() * 10 - 5;  // Random upward movement (-5 to 5)
-            
-            fire.style.left = `calc(50% + ${randomX}px)`;
-            fire.style.top = `calc(-50px + ${randomY}px)`;
-            fire.style.animationDuration = (0.5 + Math.random() * 0.5) + "s"; 
-            
-            document.getElementById("candle").appendChild(fire);
-            setTimeout(() => fire.remove(), 1000); // Remove fire after animation
-        }, i * 100);
-    }
-}
+                        smoke.style.left = `calc(50% + ${randomX}px)`;
+                        smoke.style.top = `calc(-70px + ${randomY}px)`;
+                        smoke.style.animationDuration = (2 + Math.random()) + "s"; // Random duration
 
-function createSmokeParticles() {
-    if (timeLeft <= 0) return; // Stop smoke particles when time is up
-
-    for (let i = 0; i < 3; i++) {  
-        setTimeout(() => {
-            const smoke = document.createElement("div");
-            smoke.classList.add("smoke-particle");
-
-            // More random positioning
-            let randomX = Math.random() * 20 - 10; // Random left movement (-10 to 10)
-            let randomY = Math.random() * 15 - 7;  // Random slight vertical variation (-7 to 7)
-
-            smoke.style.left = `calc(50% + ${randomX}px)`;
-            smoke.style.top = `calc(-70px + ${randomY}px)`;
-            smoke.style.animationDuration = (2 + Math.random()) + "s"; // Random duration
-
-            document.getElementById("candle").appendChild(smoke);
-            setTimeout(() => smoke.remove(), 3000); // Remove after animation
-        }, i * 300);
-    }
-}
+                        document.getElementById("candle").appendChild(smoke);
+                        setTimeout(() => smoke.remove(), 3000); // Remove after animation
+                    }, i * 300);
+                }
+            }
 
 
 
-        function createSmoke() {
-            const smoke = document.createElement("div");
-            smoke.classList.add("smoke");
-            document.getElementById("candle").appendChild(smoke);
-            setTimeout(() => smoke.remove(), 2000); // Remove after animation
-        }
-        updateTimer(); // Initialize the timer display
+            function createSmoke() {
+                const smoke = document.createElement("div");
+                smoke.classList.add("smoke");
+                document.getElementById("candle").appendChild(smoke);
+                setTimeout(() => smoke.remove(), 2000); // Remove after animation
+            }
+            updateTimer(); // Initialize the timer display
 
 
 
-        start.addEventListener("click", startTimer);
-        stop.addEventListener("click", stopTimer);
-        reset.addEventListener("click", resetTimer);
+            start.addEventListener("click", startTimer);
+            stop.addEventListener("click", stopTimer);
+            reset.addEventListener("click", resetTimer);
 
-        /*rest.addEventListener("click", () => {
-                timeLeft += 5; // Add 5 minutes (300 seconds)
-                //totalTime += 5; // Increase total time for progress calculation
-                updateTimer(); // Update the display
-            });*/
+            /*rest.addEventListener("click", () => {
+                    timeLeft += 5; // Add 5 minutes (300 seconds)
+                    //totalTime += 5; // Increase total time for progress calculation
+                    updateTimer(); // Update the display
+                });*/
     </script>
 
 </body>

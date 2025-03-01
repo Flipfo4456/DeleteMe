@@ -798,7 +798,7 @@ function updateButtons() {
                 extraTime += 8; // Add 8 seconds extra time
                 updateExtra(); // Update the extra time countdown
                 const moreTimeInterval = setInterval(() => {
-                    if (extraTime > 0 && timeLeft === 0) {
+                    if (extraTime > 0 & timeLeft === 0 ) {
                         extraTime--;
                         updateExtra(); // Update the extra time countdown
                         updateButtons();

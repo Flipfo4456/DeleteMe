@@ -793,25 +793,31 @@ function updateButtons() {
 
           
         moreButton.addEventListener('click', () => {
+            let moreTimeInterval = null; // Store interval reference
 
-            if (timeLeft === 0 && extraTime === 0) {
-                extraTime += 8; // Add 8 seconds extra time
-                updateExtra(); // Update the extra time countdown
-                const moreTimeInterval = setInterval(() => {
-                    if (extraTime > 0 & timeLeft === 0 ) {
-                        extraTime--;
-                        updateExtra(); // Update the extra time countdown
-                        updateButtons();
-                    } else {
+                if (timeLeft === 0 && extraTime === 0) {
+                    extraTime += 8; // Add 8 seconds extra time
+                    updateExtra(); // Update the extra time countdown
+                
+                    // Clear any existing interval before starting a new one
+                    if (moreTimeInterval) {
                         clearInterval(moreTimeInterval);
-                        reset.disabled = false;
                     }
-                }, 1000);
                 
+                    moreTimeInterval = setInterval(() => {
+                        if (extraTime > 0 && timeLeft === 0) {
+                            extraTime--;
+                            updateExtra(); // Update the extra time countdown
+                            updateButtons();
+                        } else {
+                            clearInterval(moreTimeInterval);
+                            moreTimeInterval = null; // Reset interval reference
+                            reset.disabled = false;
+                        }
+        }, 1000);
+}
 
-            }
-                
-            updateButtons();
+updateButtons();
         });
       
           start.addEventListener("click", ()=>{
